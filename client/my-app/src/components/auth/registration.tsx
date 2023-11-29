@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { IProfile } from '../../interfaces';
+import { registerUser } from '../../services/auth.services';
 
 const Registration: React.FC = () => {
   const noAllowedSymbols = /^[(){}]+$/;
@@ -13,13 +14,13 @@ const Registration: React.FC = () => {
 
   const formik = useFormik({
     initialValues: {
-      userName: '',
+      name: '',
       email: '',
       password: '',
       confirmPassword: '',
     },
     validationSchema: Yup.object({
-      userName: Yup.string().required('Please add your user name'),
+      name: Yup.string().required('Please add your user name'),
       email: Yup.string().required('Please add your email address'),
       password: Yup.string().required('Please add a password'),
       confirmPassword: Yup.string().required('Please add a password'),
@@ -27,7 +28,7 @@ const Registration: React.FC = () => {
     onSubmit: async (values: IProfile) => {
       console.log('onSubmit triggered'); // Add this line
       console.log('values', values);
-      if (!patternLetters.test(values.userName)) {
+      if (!patternLetters.test(values.name)) {
         toast.warning('Name not allowed, just letters allowed')
       }
       else if (noAllowedSymbols.test(values.email)) {
@@ -38,7 +39,7 @@ const Registration: React.FC = () => {
       } else if (!patternLettersAndNumbers.test(values.confirmPassword)){
           toast.warning('Only numbers and letters allowed in the confirm password')
       } else {
-        toast.info('user register')
+        registerUser(formik.values)
       }
     }
   })
@@ -46,7 +47,7 @@ const Registration: React.FC = () => {
   return (
     <>
       <form onSubmit={formik.handleSubmit}>
-        <input type='text' aria-label='Insert your name' placeholder='Name...' id='userName' value={formik.values.userName} onChange={formik.handleChange} />
+        <input type='text' aria-label='Insert your name' placeholder='Name...' id='name' value={formik.values.name} onChange={formik.handleChange} />
         <input type='text' aria-label='Insert your email' placeholder='Email...' id='email' value={formik.values.email} onChange={formik.handleChange} />
         <input type='text' aria-label='Insert your password' placeholder='Password...' id='password' value={formik.values.password} onChange={formik.handleChange} />
         <input type='text' aria-label='Confirm your password' placeholder='Confirm password...' id='confirmPassword' value={formik.values.confirmPassword} onChange={formik.handleChange} />
