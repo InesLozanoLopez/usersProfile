@@ -1,14 +1,14 @@
 "use strict"
 
-import bcrypt from "bcrypt";
 import { Request, Response } from 'express';
 import UsersModel from "../../models/usersModel"
-import {IRegisterRequest} from './interfaces';
+import {RegisterRequestProps} from './interfaces';
+import bcrypt from 'bcrypt';
 
 export const register = async (req: Request, res: Response) => {
     try{
         const {name, email, password, confirmPassword } =
-        req.body as IRegisterRequest;
+        req.body as RegisterRequestProps;
 
         const existingUser = await UsersModel.findOne({ where: {email} });
 
@@ -34,7 +34,7 @@ export const register = async (req: Request, res: Response) => {
             email,
             password: hashedPassword,
         });
-        res.sendStatus(201);
+        res.status(201).send({message: "User created succesfully"});
     } catch(error) {
         console.log(error);
         return res.status(500).send({ message: "Server error"})
