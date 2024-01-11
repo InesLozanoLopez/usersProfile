@@ -41,7 +41,7 @@ const Registration: React.FC = () => {
           toast.warning('Only numbers and letters allowed in the confirm password')
       } else {
         registerUser(formik.values);
-        navigate('/main');
+        navigate('/profile');
       }
     }
   })

@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { ILogin, IProfile } from '../interfaces';
-import { authHeader } from './auth.header.tsx';
+// import { authHeader } from './auth.header.tsx';
 
-const API_URL = 'http://localhost:3001';
+const API_URL = 'http://localhost:3001/authRouter';
 
 export const registerUser = async ({
     name,
@@ -16,13 +16,10 @@ export const registerUser = async ({
             name,
             email,
             password,
-            confirmPassword
+            confirmPassword,
         });
-        console.log('registerServiceOut');
         return response;
     } catch (error) {
-        console.log('registerServiceError');
-
         if (axios.isAxiosError(error)) {
             toast.error(error.response?.data.message)
         }
@@ -60,18 +57,18 @@ export const getCurrentUser = (): IProfile | null => {
    return null
 };
 
-export const getUser = async () => {
-  try {
-    const response = await axios.get(API_URL + '/user', {
-      headers: authHeader(),
-    });
-    if (response.data) {
-      localStorage.setItem('user', JSON.stringify(response.data));
-    }
-    return response.data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      toast.error(error.response?.data.message);
-    }
-  }
-};
+// export const getUser = async () => {
+//   try {
+//     const response = await axios.get(API_URL + '/user', {
+//       headers: authHeader(),
+//     });
+//     if (response.data) {
+//       localStorage.setItem('user', JSON.stringify(response.data));
+//     }
+//     return response.data;
+//   } catch (error) {
+//     if (axios.isAxiosError(error)) {
+//       toast.error(error.response?.data.message);
+//     }
+//   }
+// };

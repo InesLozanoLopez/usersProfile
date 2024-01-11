@@ -9,3 +9,9 @@ export interface ILogin {
   email: string,
   password: string,
 }
+
+export interface IUserInfo {
+  house?: number,
+  admin?: boolean,
+  photo?: Buffer,
+}

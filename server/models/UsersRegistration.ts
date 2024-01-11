@@ -24,9 +24,4 @@ const UsersRegistration = sequelize.define("UsersRegistration", {
     }
 })
 
-sequelize.sync().then(() => {
-    console.log('Database synchroninzed successfully');
-}).catch((error) => {
-    console.log(error)
-})
 export default UsersRegistration;
