@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { Request, Response } from "express";
 import UsersModel from "../../models/usersModel";
-import { LoginRequestProps, RegisterRequestProps, UserState } from "./interfaces";
+import { LoginRequestProps, UserState } from "./interfaces";
 
 dotenv.config();
 const SECRET_KEY = process.env.SECRET_KEY || "secret_key";

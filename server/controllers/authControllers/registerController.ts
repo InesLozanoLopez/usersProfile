@@ -7,6 +7,7 @@ import bcrypt from 'bcrypt';
 
 export const register = async (req: Request, res: Response) => {
     try{
+        console.log('registerController')
         const {name, email, password, confirmPassword } =
         req.body as RegisterRequestProps;
 
