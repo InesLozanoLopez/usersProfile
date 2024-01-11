@@ -3,7 +3,7 @@
 import { sequelize } from './index';
 import { DataTypes } from 'sequelize';
 
-const UsersModel = sequelize.define("UsersModel", {
+const UsersRegistration = sequelize.define("UsersRegistration", {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -24,4 +24,9 @@ const UsersModel = sequelize.define("UsersModel", {
     }
 })
 
-export default UsersModel;
+sequelize.sync().then(() => {
+    console.log('Database synchroninzed successfully');
+}).catch((error) => {
+    console.log(error)
+})
+export default UsersRegistration;

@@ -1,9 +1,9 @@
 "use strict"
 
 import { Request, Response } from 'express';
-import UsersModel from "../../models/usersModel"
 import {RegisterRequestProps} from './interfaces';
 import bcrypt from 'bcrypt';
+import UsersRegistration from '../../models/UsersRegistration';
 
 export const register = async (req: Request, res: Response) => {
     try{
@@ -11,7 +11,7 @@ export const register = async (req: Request, res: Response) => {
         const {name, email, password, confirmPassword } =
         req.body as RegisterRequestProps;
 
-        const existingUser = await UsersModel.findOne({ where: {email} });
+        const existingUser = await UsersRegistration.findOne({ where: {email} });
 
         if(existingUser) {
             return res.status(422).send({
@@ -30,7 +30,7 @@ export const register = async (req: Request, res: Response) => {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        await UsersModel.create({
+        await UsersRegistration.create({
             name,
             email,
             password: hashedPassword,

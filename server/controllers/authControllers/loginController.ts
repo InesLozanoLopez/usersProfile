@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { Request, Response } from "express";
-import UsersModel from "../../models/usersModel";
+import UsersModel from "../../models/UsersRegistration";
 import { LoginRequestProps, UserState } from "./interfaces";
 
 dotenv.config();
