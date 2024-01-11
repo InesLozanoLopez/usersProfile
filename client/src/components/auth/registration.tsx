@@ -6,8 +6,11 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { IProfile } from '../../interfaces';
 import { registerUser } from '../../services/auth.services.tsx';
+import { useNavigate } from 'react-router-dom';
 
 const Registration: React.FC = () => {
+  const navigate = useNavigate();
+  
   const noAllowedSymbols = /^[(){}]+$/;
   const patternLetters = /^[A-Za-z]+$/;
   const patternLettersAndNumbers = /^[A-Za-z0-9]+$/;
@@ -37,7 +40,8 @@ const Registration: React.FC = () => {
       } else if (!patternLettersAndNumbers.test(values.confirmPassword)){
           toast.warning('Only numbers and letters allowed in the confirm password')
       } else {
-        registerUser(formik.values)
+        registerUser(formik.values);
+        navigate('/main');
       }
     }
   })

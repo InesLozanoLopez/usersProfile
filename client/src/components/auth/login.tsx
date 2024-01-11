@@ -10,9 +10,10 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Login: React.FC = () => {
+    const navigate = useNavigate();
+
     const noAllowedSymbols = /^[(){}]+$/;
     const patternLettersAndNumbers = /^[A-Za-z0-9]+$/;
-    const navigate = useNavigate();
 
     const formik = useFormik({
         initialValues: {
