@@ -22,14 +22,25 @@ export const getUserInfo = async () => {
   }
 };
 
-export const updateUserInfo = async ({values, userId}: {values: IUserInfo, userId: number}) => {
+export const updateUserInfo = async ({ values, userId }: { values: IUserInfo, userId: number }) => {
   try {
+    const formData = new FormData();
+    if (values.house !== undefined) {
+      formData.append('house', values.house.toString());
+    }
+    if (values.photo instanceof File) {
+      formData.append('file', values.photo);
+    }
+    formData.append('admin', values.admin ? 'true' : 'false');
+    formData.append('userId', userId.toString());
 
-    const prop = {values, userId}
+    console.log(formData.get('file'));
+    const response = await axios.post(API_URL + '/profile', formData, {
+      headers: {
+      ...authHeader(),
+      'Content-Type': 'multipart/form-data',
+    }})
     
-    const response = await axios.post(API_URL + '/profile', prop, {
-      headers: authHeader()
-    })
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

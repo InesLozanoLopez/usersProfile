@@ -15,11 +15,14 @@ export const userProfile = async (req: Request, res: Response) => {
     }
 }
 
+
 export const editProfile = async (req: Request, res: Response) => {
     try {
-        const { photo = null, house, admin = false } = req.body.values;
-        const userId = req.body.userId;
         console.log('req.body', req.body);
+        console.log('req.file', req.file);
+
+        const { house, admin = false, userId } = req.body
+        const photo: Express.Multer.File | undefined = req.body.photo;
 
         const userInstance = await UsersProfile.findOne({ where: { usersRegistration_id: userId } });
 
