@@ -57,6 +57,11 @@ export const getCurrentUser = (): IProfile | null => {
    return null
 };
 
+export const logout = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('user');
+}
+
 // export const getUser = async () => {
 //   try {
 //     const response = await axios.get(API_URL + '/user', {

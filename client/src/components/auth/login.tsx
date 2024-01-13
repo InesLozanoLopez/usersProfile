@@ -8,11 +8,12 @@ import { ILogin } from '../../interfaces';
 import { loginUser } from '../../services/auth.services.tsx';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { getUserInfo } from '../../services/userProfile.services.tsx';
 
 const Login: React.FC = () => {
     const navigate = useNavigate();
 
-    const noAllowedSymbols = /^[(){}]+$/;
+    const noAllowedSymbols = /^[(){}*]+$/;
     const patternLettersAndNumbers = /^[A-Za-z0-9]+$/;
 
     const formik = useFormik({
@@ -35,7 +36,8 @@ const Login: React.FC = () => {
                 const response = await loginUser(formik.values);
 
                 if (response) {
-                    navigate('/main');
+                    const user = await getUserInfo();
+                    navigate('/profile', { state : {user}});
                 }
             }
         } catch(error){

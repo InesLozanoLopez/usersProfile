@@ -17,19 +17,21 @@ export const userProfile = async (req: Request, res: Response) => {
 
 export const editProfile = async (req: Request, res: Response) => {
     try {
-        const id = req.app.locals.user as number;
-        const { photo, house, admin } = req.body;
-        const userInstance = await UsersProfile.findOne({ where: { usersRegistration_id: id } });
+        const { photo, house, admin = false } = req.body.values;
+        const userId = req.body.userId;
+        const userInstance = await UsersProfile.findOne({ where: { usersRegistration_id: userId } });
 
         if (!userInstance) {
             return res.status(404).send({ message: "User profile not found" })
         }
+        console.log('user', userInstance)
 
         const user: IUserInfo = userInstance.get() as IUserInfo;
         user.photo = photo;
         user.house = house;
         user.admin = admin;
         await userInstance.save()
+
         res.status(200).send({ message: "Profile updated successfully" });
 
     } catch (error) {

@@ -11,9 +11,8 @@ const AppRouter: React.FC = () => {
     return (
         <>
             <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/registration" element={<Registration />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/registration" element={<Registration />} />
                 <Route element={<AuthGuard/>}>
                     <Route path="/main" element={<Main />}/>
                     <Route path="/profile" element={<Profile/>}/>
