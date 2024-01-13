@@ -1,7 +1,7 @@
 export interface IUserInfo {
     id: number,
     usersRegistration_id: number,
-    photo?: Buffer,
+    photo?: Blob | string | null,
     house?: number,
     admin?: boolean
 }

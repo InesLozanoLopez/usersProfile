@@ -24,7 +24,9 @@ export const getUserInfo = async () => {
 
 export const updateUserInfo = async ({values, userId}: {values: IUserInfo, userId: number}) => {
   try {
+
     const prop = {values, userId}
+    
     const response = await axios.post(API_URL + '/profile', prop, {
       headers: authHeader()
     })

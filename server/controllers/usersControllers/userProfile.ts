@@ -17,14 +17,15 @@ export const userProfile = async (req: Request, res: Response) => {
 
 export const editProfile = async (req: Request, res: Response) => {
     try {
-        const { photo, house, admin = false } = req.body.values;
+        const { photo = null, house, admin = false } = req.body.values;
         const userId = req.body.userId;
+        console.log('req.body', req.body);
+
         const userInstance = await UsersProfile.findOne({ where: { usersRegistration_id: userId } });
 
         if (!userInstance) {
             return res.status(404).send({ message: "User profile not found" })
         }
-        console.log('user', userInstance)
 
         const user: IUserInfo = userInstance.get() as IUserInfo;
         user.photo = photo;

@@ -18,8 +18,7 @@ const Profile: React.FC = () => {
             admin: false,
         },
         onSubmit: async (values: IUserInfo) => {
-            console.log('userId', userId)
-            await updateUserInfo({values, userId})
+            await updateUserInfo({ values, userId })
         }
     })
 
@@ -40,7 +39,7 @@ const Profile: React.FC = () => {
         logout();
         navigate('/login');
     }
-    
+
 
     return (
         <>
@@ -48,23 +47,33 @@ const Profile: React.FC = () => {
                 <label htmlFor="house">House Address</label>
                 <input type="text" id="house" name='house' value={formik.values.house} onChange={formik.handleChange} />
                 <label htmlFor="photo">Profile photo</label>
-                {/* <div>
+                <div>
                     <input
                         type='file'
                         id="photo"
                         name='photo'
-                        onChange={(event) => {
-                            const files = event.currentTarget.files;
-                            if (files) {
-                                const file = files[0]
-                                formik.setFieldValue("photo", file);
-                            }
+                        onChange={(e) => {
+                            const files = e.currentTarget.files;
+                            if(files && files.length > 0){
+                                formik.setValues({...formik.values, photo: files[0]});
+                        }}
                         }
-                        }
-            />
-            <img src={URL.createObjectURL(formik.values.photo)} alt="Photo preview" style={{maxWidth: '100px'}}/>
+                    />
+                    {formik.values.photo && (
+                        <div>
+                            {typeof formik.values.photo === 'object' ? (
+                                <img src={URL.createObjectURL(formik.values.photo)} alt="Photo preview" style={{ maxWidth: '100px' }} />
+                            ) : (
+                                formik.values.photo.startsWith('data:image') ? (
+                                    <img src={formik.values.photo} alt="Photo preview" style={{ maxWidth: '100px' }} />
+                                ) : (
+                                    <img src={formik.values.photo} alt="Photo preview" style={{ maxWidth: '100px' }} />
+                                )
+                            )}
+                        </div>
+                    )}
 
-                </div> */}
+                </div>
                 <label htmlFor="admin">Are you the admin of the house?</label>
                 <input
                     type='checkbox'
@@ -77,8 +86,8 @@ const Profile: React.FC = () => {
                             admin: e.target.checked
                         });
                     }}
-                
-                     />
+
+                />
                 <button type="submit">Submit</button>
             </form>
 
