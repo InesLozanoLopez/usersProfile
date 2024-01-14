@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { IProfile } from '../../interfaces';
-import { registerUser } from '../../services/auth.services.tsx';
+import { registerUser } from '../../services/auth.services';
 import { useNavigate } from 'react-router-dom';
 
 const Registration: React.FC = () => {

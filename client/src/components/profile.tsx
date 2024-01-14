@@ -1,20 +1,25 @@
-import React, { useEffect } from "react";
-import { IUserInfo } from "../interfaces.tsx";
+import './polyfills';
+import React, { useEffect, useState } from "react";
+import { IUserInfo } from "../interfaces";
 import { useLocation, useNavigate } from "react-router-dom";
-import { logout } from "../services/auth.services.tsx";
+import { logout } from "../services/auth.services";
 import { useFormik } from "formik";
-import { updateUserInfo } from "../services/userProfile.services.tsx";
+import { updateUserInfo } from "../services/userProfile.services";
 
 const Profile: React.FC = () => {
     const location = useLocation();
     const navigate = useNavigate();
+
+    const [userInfo, setUserInfo] = useState<IUserInfo>({})
+    const [base64String, setBase64String] = useState('');
+
 
     const userId = location.state?.user.user.usersRegistration_id;
 
     const formik = useFormik({
         initialValues: {
             house: undefined,
-            photo: null,
+            photo: null as File | null,
             admin: false,
         },
         onSubmit: async (values: IUserInfo) => {
@@ -23,13 +28,20 @@ const Profile: React.FC = () => {
     })
 
     useEffect(() => {
-        const userInfo = location.state?.user;
-        if (userInfo) {
+        const user = location.state?.user.user
+        setUserInfo(user);
+
+        if (user) {
             formik.setValues({
-                house: userInfo.house || undefined,
-                photo: userInfo.photo || null,
-                admin: userInfo.admin || false,
+                house: user.house || undefined,
+                photo: user.photo || null,
+                admin: user.admin || false,
             })
+            console.log('user', user.photo);
+            const arrayBuffer = user.photo.data;
+            const base64String = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
+            setBase64String(base64String);
+
         } else {
             navigate('/')
         }
@@ -54,25 +66,24 @@ const Profile: React.FC = () => {
                         name='photo'
                         onChange={(e) => {
                             const files = e.currentTarget.files;
-                            if(files && files.length > 0){
-                                formik.setValues({...formik.values, photo: files[0]});
-                        }}
+                            if (files && files.length > 0) {
+                                const selectedFile = files[0]!;
+                                formik.setValues({ ...formik.values, photo: selectedFile });
+                            }
+                        }
                         }
                     />
-                    {formik.values.photo && (
-                        <div>
-                            {typeof formik.values.photo === 'object' ? (
-                                <img src={URL.createObjectURL(formik.values.photo)} alt="Photo preview" style={{ maxWidth: '100px' }} />
-                            ) : (
-                                formik.values.photo.startsWith('data:image') ? (
-                                    <img src={formik.values.photo} alt="Photo preview" style={{ maxWidth: '100px' }} />
-                                ) : (
-                                    <img src={formik.values.photo} alt="Photo preview" style={{ maxWidth: '100px' }} />
-                                )
-                            )}
-                        </div>
-                    )}
-
+                    <div>
+                        {formik.values.photo !== null && (
+                            <div>
+                                <img
+                                    src={`data:image/jpeg;base64,${Buffer.from(base64String)}`}
+                                    alt="Photo preview"
+                                    style={{ maxWidth: '100px' }}
+                                />
+                            </div>
+                        )}
+                    </div>
                 </div>
                 <label htmlFor="admin">Are you the admin of the house?</label>
                 <input

@@ -1,7 +1,7 @@
-import axios from "axios";
+import { default as axios } from 'axios';
 import { toast } from "react-toastify";
-import { authHeader } from "./auth.header.tsx";
-import { IUserInfo } from "../interfaces.tsx";
+import { authHeader } from "./auth.header";
+import { IUserInfo } from "../interfaces";
 
 const API_URL = 'http://localhost:3001/user';
 
@@ -34,14 +34,14 @@ export const updateUserInfo = async ({ values, userId }: { values: IUserInfo, us
     formData.append('admin', values.admin ? 'true' : 'false');
     formData.append('userId', userId.toString());
 
-    console.log(formData.get('file'));
-    const response = await axios.post(API_URL + '/profile', formData, {
+    const response = await axios.patch(API_URL + '/profile', formData, {
       headers: {
       ...authHeader(),
       'Content-Type': 'multipart/form-data',
     }})
     
     return response.data;
+
   } catch (error) {
     if (axios.isAxiosError(error)) {
       toast.error(error.response?.data.message);

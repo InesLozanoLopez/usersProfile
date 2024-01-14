@@ -5,10 +5,10 @@ import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ILogin } from '../../interfaces';
-import { loginUser } from '../../services/auth.services.tsx';
+import { loginUser } from '../../services/auth.services';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { getUserInfo } from '../../services/userProfile.services.tsx';
+import { getUserInfo } from '../../services/userProfile.services';
 
 const Login: React.FC = () => {
     const navigate = useNavigate();

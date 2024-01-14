@@ -3,6 +3,7 @@
 import { Request, Response } from 'express';
 import UsersProfile from '../../models/UsersProfile';
 import { IUserInfo } from './interfaces';
+import { finished } from 'stream';
 
 export const userProfile = async (req: Request, res: Response) => {
     try {
@@ -18,11 +19,10 @@ export const userProfile = async (req: Request, res: Response) => {
 
 export const editProfile = async (req: Request, res: Response) => {
     try {
-        console.log('req.body', req.body);
-        console.log('req.file', req.file);
-
         const { house, admin = false, userId } = req.body
-        const photo: Express.Multer.File | undefined = req.body.photo;
+        const photo: Express.Multer.File | undefined = req.file;
+        console.log('photo', req.file);
+
 
         const userInstance = await UsersProfile.findOne({ where: { usersRegistration_id: userId } });
 
@@ -30,15 +30,17 @@ export const editProfile = async (req: Request, res: Response) => {
             return res.status(404).send({ message: "User profile not found" })
         }
 
-        const user: IUserInfo = userInstance.get() as IUserInfo;
-        user.photo = photo;
-        user.house = house;
-        user.admin = admin;
+        userInstance.set({
+            photo : photo ? photo.buffer : null,
+            house : house,
+            admin : admin,
+        })
         await userInstance.save()
 
         res.status(200).send({ message: "Profile updated successfully" });
 
     } catch (error) {
+        console.log('error controllers', error)
         res.status(500).send({ message: "Server Error" })
 
     }

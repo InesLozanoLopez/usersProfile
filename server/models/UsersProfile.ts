@@ -21,7 +21,7 @@ const UsersProfile = sequelize.define("UsersProfile", {
         },
     },
     photo: {
-        type: DataTypes.STRING,
+        type: DataTypes.BLOB('long'),
         allowNull: true,
     },
     house: {

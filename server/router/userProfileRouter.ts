@@ -7,12 +7,17 @@ import { editProfile } from './../controllers/usersControllers/userProfile';
 import multer from 'multer';
 
 import {authMiddleware} from '../middlewares/authMiddleware';
-const upload = multer();
+const upload = multer({
+    storage: multer.memoryStorage(),
+    limits: {
+        fileSize: 5 * 1024 * 1024,
+    },
+});
 
 
 const userProfileRouter = Router();
 
-userProfileRouter.post('/profile', upload.single('file'), editProfile);
+userProfileRouter.put('/profile', upload.single('file'), editProfile);
 userProfileRouter.get('/profile', authMiddleware, userProfile);
 // authRouter.post('/profile', editProfile);
 

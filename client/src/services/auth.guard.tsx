@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, Navigate } from 'react-router-dom';
-import {getCurrentUser} from './auth.services.tsx';
+import {getCurrentUser} from './auth.services';
 
 export const AuthGuard: React.FC = () => {
     const authUser = getCurrentUser();

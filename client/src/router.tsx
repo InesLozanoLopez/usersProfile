@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Registration from './components/auth/registration.tsx';
-import Login from './components/auth/login.tsx';
-import Profile from './components/profile.tsx';
-import { AuthGuard } from './services/auth.guard.tsx';
-import Main from './components/main.tsx';
+import Registration from './components/auth/registration';
+import Login from './components/auth/login';
+import Profile from './components/profile';
+import { AuthGuard } from './services/auth.guard';
+import Main from './components/main';
 
 const AppRouter: React.FC = () => {
 
