@@ -1,7 +1,6 @@
-export interface IUserInfo {
-    id: number,
-    usersRegistration_id: number,
-    photo?: Express.Multer.File | undefined,
-    house?: number,
-    admin?: boolean
+export interface IeditProfileRequest {
+    house: string,
+    photo: string,
+    admin: boolean,
+    userId: number,
 }

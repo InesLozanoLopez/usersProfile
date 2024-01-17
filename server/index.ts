@@ -11,6 +11,10 @@ app.use(express.json());
 app.use(cors());
 app.use(router);
 
-app.listen(port, () => {
-    console.log(`Server running at ${port}`);
+app.listen(port, (error?: Error) => {
+    if (error) {
+        console.error('Error starting the server:', error)
+    } else {
+        console.log(`Server running at ${port}`);
+    }
 })

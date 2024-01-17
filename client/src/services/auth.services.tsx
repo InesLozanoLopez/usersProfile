@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { ILogin, IProfile } from '../interfaces';
-// import { authHeader } from './auth.header.tsx';
 
 const API_URL = 'http://localhost:3001/authRouter';
 
@@ -62,18 +61,3 @@ export const logout = () => {
     localStorage.removeItem('user');
 }
 
-// export const getUser = async () => {
-//   try {
-//     const response = await axios.get(API_URL + '/user', {
-//       headers: authHeader(),
-//     });
-//     if (response.data) {
-//       localStorage.setItem('user', JSON.stringify(response.data));
-//     }
-//     return response.data;
-//   } catch (error) {
-//     if (axios.isAxiosError(error)) {
-//       toast.error(error.response?.data.message);
-//     }
-//   }
-// };

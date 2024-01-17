@@ -21,18 +21,16 @@ const UsersProfile = sequelize.define("UsersProfile", {
         },
     },
     photo: {
-        type: DataTypes.BLOB('long'),
+        type: DataTypes.STRING,
         allowNull: true,
     },
     house: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: true,
     },
     admin: {
         type: DataTypes.BOOLEAN,
         allowNull: true,
-        defaultValue: false,
-
     }
 })
 

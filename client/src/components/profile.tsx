@@ -1,25 +1,24 @@
-import './polyfills';
 import React, { useEffect, useState } from "react";
 import { IUserInfo } from "../interfaces";
 import { useLocation, useNavigate } from "react-router-dom";
 import { logout } from "../services/auth.services";
 import { useFormik } from "formik";
 import { updateUserInfo } from "../services/userProfile.services";
+import { profileIconsList } from "./profileIconsList";
+
+import './../styles/Profile.css';
 
 const Profile: React.FC = () => {
     const location = useLocation();
     const navigate = useNavigate();
-
-    const [userInfo, setUserInfo] = useState<IUserInfo>({})
-    const [base64String, setBase64String] = useState('');
-
+    const [profilePhotoVisible, setProfilePhotoVisible] = useState<boolean>(false)
 
     const userId = location.state?.user.user.usersRegistration_id;
 
     const formik = useFormik({
         initialValues: {
-            house: undefined,
-            photo: null as File | null,
+            house: '',
+            photo: '',
             admin: false,
         },
         onSubmit: async (values: IUserInfo) => {
@@ -28,82 +27,111 @@ const Profile: React.FC = () => {
     })
 
     useEffect(() => {
-        const user = location.state?.user.user
-        setUserInfo(user);
+        const fetchData = async () => {
+            const user = await location.state?.user.user;
 
-        if (user) {
-            formik.setValues({
-                house: user.house || undefined,
-                photo: user.photo || null,
-                admin: user.admin || false,
-            })
-            console.log('user', user.photo);
-            const arrayBuffer = user.photo.data;
-            const base64String = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
-            setBase64String(base64String);
+            if (user) {
+                formik.setValues({
+                    house: user.house || 'Not added yet',
+                    photo: user.photo || 'ostrich',
+                    admin: user.admin || false,
+                });
 
-        } else {
-            navigate('/')
-        }
-    }, [])
+            } else {
+                navigate('/login');
+            }
+        };
+        fetchData();
+    }, []);
 
     const handleLogOut = () => {
         logout();
         navigate('/login');
     }
 
+    const handleChangeProfilePhoto = () => {
+        setProfilePhotoVisible(!profilePhotoVisible);
+    }
+    const handleSelectProfilePhoto = (selectedPhoto: string) => {
+        formik.setValues({
+            ...formik.values,
+            photo: selectedPhoto,
+        })
+        setProfilePhotoVisible(!profilePhotoVisible);
+
+
+    }
 
     return (
         <>
-            <form onSubmit={formik.handleSubmit}>
-                <label htmlFor="house">House Address</label>
-                <input type="text" id="house" name='house' value={formik.values.house} onChange={formik.handleChange} />
-                <label htmlFor="photo">Profile photo</label>
-                <div>
-                    <input
-                        type='file'
-                        id="photo"
-                        name='photo'
-                        onChange={(e) => {
-                            const files = e.currentTarget.files;
-                            if (files && files.length > 0) {
-                                const selectedFile = files[0]!;
-                                formik.setValues({ ...formik.values, photo: selectedFile });
-                            }
-                        }
-                        }
-                    />
-                    <div>
-                        {formik.values.photo !== null && (
-                            <div>
-                                <img
-                                    src={`data:image/jpeg;base64,${Buffer.from(base64String)}`}
-                                    alt="Photo preview"
-                                    style={{ maxWidth: '100px' }}
-                                />
-                            </div>
-                        )}
+            <section id='profilePhotoSection'>
+                <img
+                    src={`/iconsProfile/${formik.values.photo}.png`}
+                    alt='Photo perfil'
+                    aria-label="Perfil photo"
+                    className='profilePhoto'>
+                </img>
+
+                <button onClick={(event) => {
+                    event.preventDefault();
+                    handleChangeProfilePhoto();
+                }}
+                    className="changeProfilePhoto"
+                    aria-label="Button to change profile photo"
+                >Change profile photo</button>
+                {profilePhotoVisible && (
+                    <div className="alternativePhotosContainer">
+                        {profileIconsList.filter((fileName) => fileName !== formik.values.photo)
+                            .map((fileName: string, index: number) => (
+                                <img key={index}
+                                    src={`/iconsProfile/${fileName}.png`}
+                                    alt='Photo perfil'
+                                    className='profilePhoto'
+                                    aria-label="Alternative profile photos"
+                                    onClick={() => handleSelectProfilePhoto(fileName)}>
+                                </img>
+                            ))}
                     </div>
-                </div>
-                <label htmlFor="admin">Are you the admin of the house?</label>
-                <input
-                    type='checkbox'
-                    id="admin"
-                    name='admin'
-                    checked={formik.values.admin}
-                    onChange={(e) => {
-                        formik.setValues({
-                            ...formik.values,
-                            admin: e.target.checked
-                        });
-                    }}
-
-                />
-                <button type="submit">Submit</button>
-            </form>
-
+                )}
+            </section>
+            <section id='form'>
+                <form onSubmit={formik.handleSubmit}>
+                    <div>
+                        <label htmlFor="house">House: </label>
+                    </div>
+                    <div>
+                        <input
+                            type="text"
+                            id="house"
+                            name='house'
+                            value={formik.values.house}
+                            className="formInput"
+                            aria-label="House name"
+                            onChange={formik.handleChange} />
+                    </div>
+                    <div>
+                        <label htmlFor="admin">Are you the admin of the house?</label>
+                    </div>
+                    <div>
+                        <input
+                            type='checkbox'
+                            id="admin"
+                            name='admin'
+                            checked={formik.values.admin}
+                            onChange={(e) => {
+                                formik.setValues({
+                                    ...formik.values,
+                                    admin: e.target.checked
+                                });
+                            }}
+                        />
+                    </div>
+                    <button type="submit">Submit</button>
+                </form >
+            </section>
 
             <button onClick={handleLogOut}>Log out</button>
+
         </>
 
     )

@@ -9,7 +9,6 @@ async function authenticate() {
   try {
     await sequelize.authenticate();
     await sequelize.sync();
-    // await UsersRegistration.sync();
     console.log("Database succesfully connected")
   } catch (error) {
     console.error('Error:', error);

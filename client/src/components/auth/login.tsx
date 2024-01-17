@@ -36,8 +36,12 @@ const Login: React.FC = () => {
                 const response = await loginUser(formik.values);
 
                 if (response) {
+                    try{
                     const user = await getUserInfo();
                     navigate('/profile', { state : {user}});
+                    } catch(error){
+                        console.log(error)
+                    }
                 }
             }
         } catch(error){

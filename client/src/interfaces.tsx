@@ -11,7 +11,7 @@ export interface ILogin {
 }
 
 export interface IUserInfo {
-  house?: number,
+  house?: number | string,
   admin?: boolean,
-  photo?:  Buffer | File | null,
+  photo?:  string,
 }
