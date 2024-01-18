@@ -9,7 +9,7 @@ import { loginUser } from '../../services/auth.services';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { getUserInfo } from '../../services/userProfile.services';
-import './../../styles/login.css';
+import './../../styles/Login.css';
 
 
 const Login: React.FC = () => {

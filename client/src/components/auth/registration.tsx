@@ -1,5 +1,4 @@
 import React from 'react';
-// import './../App.css';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
@@ -7,10 +6,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import { IProfile } from '../../interfaces';
 import { registerUser } from '../../services/auth.services';
 import { useNavigate } from 'react-router-dom';
+import './../../styles/Registration.css'
 
 const Registration: React.FC = () => {
   const navigate = useNavigate();
-  
+
   const noAllowedSymbols = /^[(){}]+$/;
   const patternLetters = /^[A-Za-z]+$/;
   const patternLettersAndNumbers = /^[A-Za-z0-9]+$/;
@@ -37,8 +37,8 @@ const Registration: React.FC = () => {
       }
       else if (!patternLettersAndNumbers.test(values.password)) {
         toast.warning('Only numbers and letters allowed in the password')
-      } else if (!patternLettersAndNumbers.test(values.confirmPassword)){
-          toast.warning('Only numbers and letters allowed in the confirm password')
+      } else if (!patternLettersAndNumbers.test(values.confirmPassword)) {
+        toast.warning('Only numbers and letters allowed in the confirm password')
       } else {
         registerUser(formik.values);
         navigate('/profile');
@@ -47,16 +47,48 @@ const Registration: React.FC = () => {
   })
 
   return (
-    <>
+    <section id='formContainer'>
       <form onSubmit={formik.handleSubmit}>
-        <input type='text' aria-label='Insert your name' placeholder='Name...' id='name' value={formik.values.name} onChange={formik.handleChange} />
-        <input type='text' aria-label='Insert your email' placeholder='Email...' id='email' value={formik.values.email} onChange={formik.handleChange} />
-        <input type='text' aria-label='Insert your password' placeholder='Password...' id='password' value={formik.values.password} onChange={formik.handleChange} />
-        <input type='text' aria-label='Confirm your password' placeholder='Confirm password...' id='confirmPassword' value={formik.values.confirmPassword} onChange={formik.handleChange} />
+        <input
+          type='text'
+          aria-label='Insert your name'
+          placeholder='Name...'
+          id='name'
+          className='formInput'
+          value={formik.values.name}
+          onChange={formik.handleChange} />
+        <input
+          type='text'
+          aria-label='Insert your email'
+          placeholder='Email...'
+          id='email'
+          className='formInput'
+          value={formik.values.email}
+          onChange={formik.handleChange} />
+        <input
+          type='text'
+          aria-label='Insert your password'
+          placeholder='Password...'
+          id='password'
+          className='formInput'
+          value={formik.values.password}
+          onChange={formik.handleChange} />
+        <input
+          type='text'
+          aria-label='Confirm your password'
+          placeholder='Confirm password...'
+          id='confirmPassword'
+          className='formInput'
+          value={formik.values.confirmPassword}
+          onChange={formik.handleChange} />
 
-        <button type="submit">Create Profile</button>
+        <button
+          type="submit"
+          aria-label='Submit to create a new profile'
+          className='button'
+        >Create Profile</button>
       </form>
-    </>
+    </section>
   );
 }
 
