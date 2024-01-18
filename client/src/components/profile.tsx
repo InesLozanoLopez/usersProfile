@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ILogin, IUserInfo } from "../interfaces";
+import { IUserInfo } from "../interfaces";
 import { useLocation, useNavigate } from "react-router-dom";
 import { logout } from "../services/auth.services";
 import { useFormik } from "formik";

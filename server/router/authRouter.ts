@@ -3,14 +3,13 @@
 import { Router } from 'express';
 import { register } from './../controllers/authControllers/registerController';
 import { login } from './../controllers/authControllers/loginController';
-// import { editProfile } from './../controllers/authControllers/registerController';
-// import { authMiddleware } from '../middlewares/authMiddleware'
-// import { userDetails } from '../controllers/authControllers/profileController';
+import { changePassword } from './../controllers/authControllers/profileController';
+
 
 const authRouter = Router();
 
 authRouter.post('/register', register);
 authRouter.post('/login', login);
-// authRouter.get('/user', authMiddleware, userDetails);
+authRouter.patch('/profile', changePassword);
 
 export default authRouter;

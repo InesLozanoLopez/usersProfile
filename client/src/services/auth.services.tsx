@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { ILogin, IProfile } from '../interfaces';
+import { ILogin, IPasswordChange, IProfile } from '../interfaces';
+import { authHeader } from './auth.header';
 
 const API_URL = 'http://localhost:3001/authRouter';
 
@@ -61,3 +62,19 @@ export const logout = () => {
     localStorage.removeItem('user');
 }
 
+export const changePassword = async ({values, userId} : {values: IPasswordChange, userId: number} ) => {
+    try{
+        const data = {values, userId}
+        const response = await axios.patch(`${API_URL}/profile`, data, {
+            headers: authHeader(),
+        })
+        if (response.data) {
+            return response.data
+        }
+    }catch (error) {
+        if(axios.isAxiosError(error)){
+            toast.error(error.response?.data.message)
+        }
+    }
+
+}

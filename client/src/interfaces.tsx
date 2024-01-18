@@ -17,3 +17,8 @@ export interface IUserInfo {
   name: string,
   email: string,
 }
+
+export interface IPasswordChange {
+  password: string,
+  newPassord: string
+}
