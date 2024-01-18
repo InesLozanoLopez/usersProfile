@@ -1,0 +1,25 @@
+#formContainer{
+    height: 40vh;
+    margin: 10vw;
+    margin-bottom: 5vw;
+    border: 1px solid lightgray;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+#formContainer .formInput {
+    width: 90%;
+}
+
+#formContainer .button {
+    margin-left: 77%;
+    margin-top: 3vw;
+}
+
+#registration .button {
+    margin-left: 68%;
+    margin-top: 0;
+}

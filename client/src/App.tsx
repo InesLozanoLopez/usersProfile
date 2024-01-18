@@ -9,7 +9,7 @@ const App = () => {
       <AppRouter/>
       <ToastContainer position="top-right" theme="colored"/>
     </>
-  );
+  )
 }
 
 export default App;

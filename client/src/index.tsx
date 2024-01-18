@@ -10,7 +10,7 @@ root.render(
   <>
     <BrowserRouter>
       <App />
-    </BrowserRouter>,
+    </BrowserRouter>
   </>
 );
 reportWebVitals();

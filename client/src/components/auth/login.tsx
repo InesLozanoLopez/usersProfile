@@ -9,6 +9,8 @@ import { loginUser } from '../../services/auth.services';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { getUserInfo } from '../../services/userProfile.services';
+import './../../styles/login.css';
+
 
 const Login: React.FC = () => {
     const navigate = useNavigate();
@@ -27,39 +29,73 @@ const Login: React.FC = () => {
         }),
         onSubmit: async (values: ILogin) => {
             try {
-            if (noAllowedSymbols.test(values.email)) {
-                toast.warning('Email format not allowed')
-            }
-            else if (!patternLettersAndNumbers.test(values.password)) {
-                toast.warning('Only numbers and letters allowed in the password')
-            } else {
-                const response = await loginUser(formik.values);
+                if (noAllowedSymbols.test(values.email)) {
+                    toast.warning('Email format not allowed')
+                }
+                else if (!patternLettersAndNumbers.test(values.password)) {
+                    toast.warning('Only numbers and letters allowed in the password')
+                } else {
+                    const response = await loginUser(formik.values);
 
-                if (response) {
-                    try{
-                    const user = await getUserInfo();
-                    navigate('/profile', { state : {user}});
-                    } catch(error){
-                        console.log(error)
+                    if (response) {
+                        try {
+                            const user = await getUserInfo();
+                            navigate('/profile', { state: { user } });
+                        } catch (error) {
+                            console.log(error)
+                        }
                     }
                 }
-            }
-        } catch(error){
-            if (axios.isAxiosError(error)){
+            } catch (error) {
+                if (axios.isAxiosError(error)) {
                     toast.error(error.response?.data.message)
                 }
             }
         }
     })
 
+    const handleRegistration = () => {
+        navigate('/registration');
+    }
+
     return (
         <>
-            <form onSubmit={formik.handleSubmit}>
-                <input type='text' aria-label='Insert your email' placeholder='Email...' id='email' value={formik.values.email} onChange={formik.handleChange} />
-                <input type='text' aria-label='password' placeholder='Password...' id='password' value={formik.values.password} onChange={formik.handleChange} />
-                <button type="submit">Login</button>
-            </form>
+            <section id='formContainer'>
+                <form onSubmit={formik.handleSubmit}>
+                    <input
+                        type='text'
+                        aria-label='Insert your email'
+                        placeholder='Email...'
+                        id='email'
+                        className='formInput'
+                        value={formik.values.email}
+                        onChange={formik.handleChange} />
+                    <input
+                        type='text'
+                        aria-label='password'
+                        placeholder='Password...'
+                        id='password'
+                        className='formInput'
+                        value={formik.values.password}
+                        onChange={formik.handleChange} />
+                    <button
+                        type="submit"
+                        aria-label='submit'
+                        className="button"
+                    >Login</button>
+                </form>
+            </section>
+
+            <section id='registration'>
+                <button
+                    type="button"
+                    aria-label='submit'
+                    className="button"
+                    onClick={handleRegistration}
+                >Registration</button>
+            </section>
         </>
+
     );
 }
 

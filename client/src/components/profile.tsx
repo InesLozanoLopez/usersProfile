@@ -5,7 +5,6 @@ import { logout } from "../services/auth.services";
 import { useFormik } from "formik";
 import { updateUserInfo } from "../services/userProfile.services";
 import { profileIconsList } from "./profileIconsList";
-
 import './../styles/Profile.css';
 
 const Profile: React.FC = () => {
@@ -76,7 +75,7 @@ const Profile: React.FC = () => {
                     event.preventDefault();
                     handleChangeProfilePhoto();
                 }}
-                    className="changeProfilePhoto"
+                    className="button"
                     aria-label="Button to change profile photo"
                 >Change profile photo</button>
                 {profilePhotoVisible && (
