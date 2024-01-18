@@ -71,7 +71,7 @@ const Login: React.FC = () => {
                         value={formik.values.email}
                         onChange={formik.handleChange} />
                     <input
-                        type='text'
+                        type='password'
                         aria-label='password'
                         placeholder='Password...'
                         id='password'

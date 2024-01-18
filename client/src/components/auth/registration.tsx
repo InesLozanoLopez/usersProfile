@@ -66,7 +66,7 @@ const Registration: React.FC = () => {
           value={formik.values.email}
           onChange={formik.handleChange} />
         <input
-          type='text'
+          type='password'
           aria-label='Insert your password'
           placeholder='Password...'
           id='password'
@@ -74,7 +74,7 @@ const Registration: React.FC = () => {
           value={formik.values.password}
           onChange={formik.handleChange} />
         <input
-          type='text'
+          type='password'
           aria-label='Confirm your password'
           placeholder='Confirm password...'
           id='confirmPassword'
