@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { IUserInfo } from "../interfaces";
+import { ILogin, IUserInfo } from "../interfaces";
 import { useLocation, useNavigate } from "react-router-dom";
 import { logout } from "../services/auth.services";
 import { useFormik } from "formik";
@@ -10,8 +10,8 @@ import './../styles/Profile.css';
 const Profile: React.FC = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const [profilePhotoVisible, setProfilePhotoVisible] = useState<boolean>(false)
-
+    const [profilePhotoVisible, setProfilePhotoVisible] = useState<boolean>(false);
+    const [showConfirmationMessage, setShowConfirmationMessage] = useState<boolean>(false);
     const userId = location.state?.user.user.usersRegistration_id;
 
     const formik = useFormik({
@@ -19,6 +19,8 @@ const Profile: React.FC = () => {
             house: '',
             photo: '',
             admin: false,
+            email: '',
+            name: '',
         },
         onSubmit: async (values: IUserInfo) => {
             await updateUserInfo({ values, userId })
@@ -34,6 +36,8 @@ const Profile: React.FC = () => {
                     house: user.house || 'Not added yet',
                     photo: user.photo || 'ostrich',
                     admin: user.admin || false,
+                    email: user.email,
+                    name: user.name,
                 });
 
             } else {
@@ -57,13 +61,28 @@ const Profile: React.FC = () => {
             photo: selectedPhoto,
         })
         setProfilePhotoVisible(!profilePhotoVisible);
+    }
 
+    const confirmDeleteHouse = () => {
+        formik.setValues({
+            ...formik.values,
+            house: 'Not added yet'
+        })
+        setShowConfirmationMessage(!showConfirmationMessage)
+    }
 
+    const handleDeleteHouse = () => {
+        setShowConfirmationMessage(!showConfirmationMessage);
+    }
+
+    const handleAddHouse = async () => {
+        await formik.submitForm();
+        navigate('/house-profile');
     }
 
     return (
         <>
-            <section id='profilePhotoSection'>
+            <section id='profilePhoto'>
                 <img
                     src={`/iconsProfile/${formik.values.photo}.png`}
                     alt='Photo perfil'
@@ -95,10 +114,29 @@ const Profile: React.FC = () => {
             </section>
             <section id='form'>
                 <form onSubmit={formik.handleSubmit}>
-                    <div>
-                        <label htmlFor="house">House: </label>
+                    <div className='userDetailsContainer'>
+                        <input
+                            type="text"
+                            id="name"
+                            name='name'
+                            value={formik.values.name}
+                            onChange={formik.handleChange}
+                            className="formInput"
+                            aria-label="Your Name"
+                        />
+                        <input
+                            type="text"
+                            id="email"
+                            name='email'
+                            value={formik.values.email}
+                            onChange={formik.handleChange}
+                            className="formInput"
+                            aria-label="Your Email"
+                        />
                     </div>
-                    <div>
+
+                    <div className='houseContainer'>
+                        House:
                         <input
                             type="text"
                             id="house"
@@ -106,30 +144,81 @@ const Profile: React.FC = () => {
                             value={formik.values.house}
                             className="formInput"
                             aria-label="House name"
-                            onChange={formik.handleChange} />
-                    </div>
-                    <div>
-                        <label htmlFor="admin">Are you the admin of the house?</label>
-                    </div>
-                    <div>
-                        <input
-                            type='checkbox'
-                            id="admin"
-                            name='admin'
-                            checked={formik.values.admin}
-                            onChange={(e) => {
-                                formik.setValues({
-                                    ...formik.values,
-                                    admin: e.target.checked
-                                });
-                            }}
+                            readOnly
                         />
+                        <button
+                            type="submit"
+                            className="button"
+                            aria-label='To delete your profile on that house'
+                            onClick={handleDeleteHouse}>
+                            I live somewhere else</button>
                     </div>
-                    <button type="submit">Submit</button>
-                </form >
-            </section>
 
-            <button onClick={handleLogOut}>Log out</button>
+                    {showConfirmationMessage && (
+                        <div className="confirmationMessage">
+                            <p>Are you sure you want to delete this house?</p>
+                            <div className="confimationMessageButtons">
+                                <button
+                                    type="button"
+                                    className="button"
+                                    aria-label="To delete your proffile on that house"
+                                    onClick={confirmDeleteHouse}>Yes</button>
+                                <button
+                                    type="button"
+                                    className="button"
+                                    aria-label="To delete your proffile on that house"
+                                    onClick={handleDeleteHouse}>No</button>
+                            </div>
+
+                        </div>
+                    )}
+
+                    <div className="adminContainer">
+                        <div>
+                            Are you the lead tenant of a house?
+                            <input
+                                type='checkbox'
+                                id="admin"
+                                name='admin'
+                                checked={formik.values.admin}
+                                onChange={(e) => {
+                                    formik.setValues({
+                                        ...formik.values,
+                                        admin: e.target.checked
+                                    });
+                                }}
+                            />
+                        </div>
+
+                        {formik.values.admin && formik.values.house === 'Not added yet' && (
+                            <div className="confirmationMessage">
+
+                                <button
+                                    type="button"
+                                    className="button"
+                                    onClick={handleAddHouse}
+                                    aria-label="To add a new house profile">Click to add a new house</button>
+                            </div>
+
+                        )}
+                    </div>
+
+                    <div className='submitButton'>
+                        <button
+                            type="submit"
+                            className="button"
+                            aria-label="To submit">Submit</button>
+                    </div>
+                </form >
+            </section >
+
+            <section id='logOut'>
+                <button
+                    type="button"
+                    className="button"
+                    aria-label="To Log out"
+                    onClick={handleLogOut}>Log out</button>
+            </section>
 
         </>
 

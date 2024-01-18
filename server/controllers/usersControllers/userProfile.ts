@@ -3,6 +3,7 @@
 import { Request, Response } from 'express';
 import UsersProfile from '../../models/UsersProfile';
 import { IeditProfileRequest } from './interfaces';
+import UsersRegistration from '../../models/UsersRegistration';
 
 export const userProfile = async (req: Request, res: Response) => {
     try {
@@ -18,10 +19,7 @@ export const userProfile = async (req: Request, res: Response) => {
 
 export const editProfile = async (req: Request, res: Response) => {
     try {
-        console.log('HERE!!! req.body', req.body)
-        console.log('userId', req.body.userId)
-
-        const { house, photo, admin = false } = req.body.values as IeditProfileRequest;
+        const { house, photo, admin = false, email, name } = req.body.values as IeditProfileRequest;
         const userId = req.body.userId
         const userInstance = await UsersProfile.findOne({ where: { usersRegistration_id: userId } });
 
@@ -33,11 +31,21 @@ export const editProfile = async (req: Request, res: Response) => {
             photo: photo,
             house: house,
             admin: admin,
+            email: email,
+            name: name
         })
         await userInstance.save()
 
+        const userRegistration = await UsersRegistration.findOne({ where: { id: userId } })
+        if (userRegistration) {
+            userRegistration.set({
+                email: email,
+                name: name,
+            })
+            await userRegistration?.save()
+        }
+
         res.status(200).send({ message: "Profile updated successfully" });
-        console.log('saved!')
 
     } catch (error) {
         console.log('error controllers', error)

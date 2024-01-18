@@ -12,6 +12,8 @@ export interface ILogin {
 
 export interface IUserInfo {
   house?: number | string,
-  admin?: boolean,
+  admin: boolean,
   photo?:  string,
+  name: string,
+  email: string,
 }

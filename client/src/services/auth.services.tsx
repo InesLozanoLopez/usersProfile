@@ -49,7 +49,7 @@ export const loginUser = async ({
 }
 
 export const getCurrentUser = (): IProfile | null => {
-   const UserStr =  localStorage.getItem('user');
+    const UserStr =  localStorage.getItem('user');
    if(UserStr){
     return JSON.parse(UserStr);
    }

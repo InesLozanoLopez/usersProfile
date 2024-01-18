@@ -31,6 +31,14 @@ const UsersProfile = sequelize.define("UsersProfile", {
     admin: {
         type: DataTypes.BOOLEAN,
         allowNull: true,
+    },
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    email: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
 })
 

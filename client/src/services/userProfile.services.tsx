@@ -25,8 +25,6 @@ export const getUserInfo = async () => {
 export const updateUserInfo = async ({ values, userId }: { values: IUserInfo, userId: number }) => {
   try {
     const userInfo = {values, userId};
-
-    console.log('userInfo', userInfo)
     const response = await axios.patch(API_URL + '/profile', userInfo, {
       headers: {
       ...authHeader(),

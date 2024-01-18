@@ -78,11 +78,13 @@ const Login: React.FC = () => {
                         className='formInput'
                         value={formik.values.password}
                         onChange={formik.handleChange} />
-                    <button
-                        type="submit"
-                        aria-label='submit'
-                        className="button"
-                    >Login</button>
+                    <div className='submitButton'>
+                        <button
+                            type="submit"
+                            aria-label='submit'
+                            className="button"
+                        >Login</button>
+                    </div>
                 </form>
             </section>
 

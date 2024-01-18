@@ -47,7 +47,7 @@ const Registration: React.FC = () => {
   })
 
   return (
-    <section id='formContainer'>
+    <section id='formContainerLogin'>
       <form onSubmit={formik.handleSubmit}>
         <input
           type='text'
@@ -82,11 +82,13 @@ const Registration: React.FC = () => {
           value={formik.values.confirmPassword}
           onChange={formik.handleChange} />
 
-        <button
-          type="submit"
-          aria-label='Submit to create a new profile'
-          className='button'
-        >Create Profile</button>
+        <div className='submit'>
+          <button
+            type="submit"
+            aria-label='Submit to create a new profile'
+            className='button'
+          >Create Profile</button>
+        </div>
       </form>
     </section>
   );

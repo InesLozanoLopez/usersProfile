@@ -1,5 +1,5 @@
-#formContainer{
-    height: 70vh;
+#formContainerLogin{
+    height: 50vh;
     margin: 10vw;
     margin-bottom: 5vw;
     border: 1px solid lightgray;
@@ -10,11 +10,13 @@
 
 }
 
-#formContainer .formInput {
+#formContainerLogin .formInput {
     width: 90%;
 }
 
-#formContainer .button {
-    margin-left: 65%;
-    margin-top: 3vw;
+.submit {
+    display: flex;
+    justify-content: end;
+    padding-right: 5vw;
+
 }
