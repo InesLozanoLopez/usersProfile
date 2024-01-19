@@ -17,23 +17,23 @@ export const userDetails = async (req: Request, res: Response) => {
 
 export const changePassword = async (req: Request, res: Response) => {
     try {
-        const {userId, newPassword, confirmNewPassword} = req.body;
+        const { userId, newPassword, confirmNewPassword } = req.body;
 
-        const existingUser = await UsersRegistration.findOne({ where: {userId} });
+        const existingUser = await UsersRegistration.findOne({ where: { userId } });
 
-        if(!existingUser){
+        if (!existingUser) {
             return res.status(422).send({
                 message: "This user is not register"
             })
         }
-        if(newPassword.trim() === ''){
+        if (newPassword.trim() === '') {
             return res.status(422).send({
                 message: "New password cannot be empty"
             })
         }
-        if(newPassword !== confirmNewPassword){
+        if (newPassword !== confirmNewPassword) {
             return res.status(422).send({
-                message:"New password and new confirm password do not match"
+                message: "New password and new confirm password do not match"
             })
         }
 
@@ -43,11 +43,10 @@ export const changePassword = async (req: Request, res: Response) => {
             password: hashedPassword
         })
         await existingUser.save()
-        res.status(201).send({message: "User password changed succesfully"});
-    } catch(error) {
+        res.status(201).send({ message: "User password changed succesfully" });
+    } catch (error) {
         console.log(error);
-        return res.status(500).send({ message: "Server error", error})
+        return res.status(500).send({ message: "Server error", error })
     }
 
-    }
 }

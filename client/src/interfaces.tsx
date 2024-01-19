@@ -11,14 +11,14 @@ export interface ILogin {
 }
 
 export interface IUserInfo {
-  house?: number | string,
+  house: string,
   admin: boolean,
-  photo?:  string,
+  photo: string,
   name: string,
   email: string,
 }
 
 export interface IPasswordChange {
-  password: string,
-  newPassord: string
+  newPassword: string,
+  newPasswordConfirmation: string
 }
