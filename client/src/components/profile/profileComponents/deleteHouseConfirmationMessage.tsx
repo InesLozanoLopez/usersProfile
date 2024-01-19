@@ -1,40 +1,43 @@
-import React from "react";
+import React from 'react';
 
 interface DeleteHouseConfirmationMessageProps {
-    message: string;
-    confirmDeleteHouse: () => void;
-    setShowConfirmationMessage: React.Dispatch<React.SetStateAction<boolean>>;
+  message: string;
+  confirmDeleteHouse: () => void;
+  setShowConfirmationMessage: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+const DeleteHouseConfirmationMessage: React.FC<
+  DeleteHouseConfirmationMessageProps
+> = ({ message, confirmDeleteHouse, setShowConfirmationMessage }) => {
+  const handleDeleteHouse = () => {
+    setShowConfirmationMessage(false);
+  };
 
-const DeleteHouseConfirmationMessage: React.FC<DeleteHouseConfirmationMessageProps> = ({
-    message,
-    confirmDeleteHouse,
-    setShowConfirmationMessage
-}) => {
+  return (
+    <div className="confirmationMessage">
+      <p>{message}</p>
 
-    const handleDeleteHouse = () => {
-        setShowConfirmationMessage(false);
-    }
+      <div className="confimationMessageButtons">
+        <button
+          type="button"
+          className="button"
+          aria-label="To delete your proffile on that house"
+          onClick={confirmDeleteHouse}
+        >
+          Yes
+        </button>
 
-    return (
-        <div className="confirmationMessage">
-                            <p>{message}</p>
-                            <div className="confimationMessageButtons">
-                                <button
-                                    type="button"
-                                    className="button"
-                                    aria-label="To delete your proffile on that house"
-                                    onClick={confirmDeleteHouse}>Yes</button>
-                                <button
-                                    type="button"
-                                    className="button"
-                                    aria-label="To delete your proffile on that house"
-                                    onClick={handleDeleteHouse}>No</button>
-                            </div>
-
-                        </div>
-    )
-}
+        <button
+          type="button"
+          className="button"
+          aria-label="To delete your proffile on that house"
+          onClick={handleDeleteHouse}
+        >
+          No
+        </button>
+      </div>
+    </div>
+  );
+};
 
 export default DeleteHouseConfirmationMessage;

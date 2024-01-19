@@ -1,12 +1,10 @@
-"use strict"
+'use strict';
 
 import { Router } from 'express';
 import { userProfile } from './../controllers/usersControllers/userProfile';
 import { editProfile } from './../controllers/usersControllers/userProfile';
 
-import {authMiddleware} from '../middlewares/authMiddleware';
-
-
+import { authMiddleware } from '../middlewares/authMiddleware';
 
 const userProfileRouter = Router();
 

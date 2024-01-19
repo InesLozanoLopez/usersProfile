@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { IProfile } from '../../interfaces';
 import { registerUser } from '../../services/auth.services';
 import { useNavigate } from 'react-router-dom';
-import './../../styles/Registration.css'
+import './../../styles/Registration.css';
 
 const Registration: React.FC = () => {
   const navigate = useNavigate();
@@ -30,68 +30,74 @@ const Registration: React.FC = () => {
     }),
     onSubmit: async (values: IProfile) => {
       if (!patternLetters.test(values.name)) {
-        toast.warning('Name not allowed, just letters allowed')
-      }
-      else if (noAllowedSymbols.test(values.email)) {
-        toast.warning('Email format not allowed')
-      }
-      else if (!patternLettersAndNumbers.test(values.password)) {
-        toast.warning('Only numbers and letters allowed in the password')
+        toast.warning('Name not allowed, just letters allowed');
+      } else if (noAllowedSymbols.test(values.email)) {
+        toast.warning('Email format not allowed');
+      } else if (!patternLettersAndNumbers.test(values.password)) {
+        toast.warning('Only numbers and letters allowed in the password');
       } else if (!patternLettersAndNumbers.test(values.confirmPassword)) {
-        toast.warning('Only numbers and letters allowed in the confirm password')
+        toast.warning(
+          'Only numbers and letters allowed in the confirm password',
+        );
       } else {
         registerUser(formik.values);
         navigate('/profile');
       }
-    }
-  })
+    },
+  });
 
   return (
-    <section id='formContainerLogin'>
+    <section id="formContainerLogin">
       <form onSubmit={formik.handleSubmit}>
         <input
-          type='text'
-          aria-label='Insert your name'
-          placeholder='Name...'
-          id='name'
-          className='formInput'
+          type="text"
+          aria-label="Insert your name"
+          placeholder="Name..."
+          id="name"
+          className="formInput"
           value={formik.values.name}
-          onChange={formik.handleChange} />
+          onChange={formik.handleChange}
+        />
         <input
-          type='text'
-          aria-label='Insert your email'
-          placeholder='Email...'
-          id='email'
-          className='formInput'
+          type="text"
+          aria-label="Insert your email"
+          placeholder="Email..."
+          id="email"
+          className="formInput"
           value={formik.values.email}
-          onChange={formik.handleChange} />
+          onChange={formik.handleChange}
+        />
         <input
-          type='password'
-          aria-label='Insert your password'
-          placeholder='Password...'
-          id='password'
-          className='formInput'
+          type="password"
+          aria-label="Insert your password"
+          placeholder="Password..."
+          id="password"
+          className="formInput"
           value={formik.values.password}
-          onChange={formik.handleChange} />
+          onChange={formik.handleChange}
+        />
         <input
-          type='password'
-          aria-label='Confirm your password'
-          placeholder='Confirm password...'
-          id='confirmPassword'
-          className='formInput'
+          type="password"
+          aria-label="Confirm your password"
+          placeholder="Confirm password..."
+          id="confirmPassword"
+          className="formInput"
           value={formik.values.confirmPassword}
-          onChange={formik.handleChange} />
+          onChange={formik.handleChange}
+        />
 
-        <div className='submit'>
+        <div className="submit">
           <button
             type="submit"
-            aria-label='Submit to create a new profile'
-            className='button'
-          >Create Profile</button>
+            aria-label="Submit to create a new profile"
+            className="button"
+          >
+            Create Profile
+          </button>
         </div>
       </form>
     </section>
   );
-}
+};
 
 export default Registration;
