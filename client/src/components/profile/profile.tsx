@@ -7,6 +7,7 @@ import ProfileForm from './profileComponents/profileForm';
 import { updateUserInfo } from '../../services/userProfile.services';
 import { useFormik } from 'formik';
 import { IUserInfo } from '../../interfaces';
+import { toast } from 'react-toastify';
 
 const Profile: React.FC = () => {
   const location = useLocation();
@@ -23,7 +24,7 @@ const Profile: React.FC = () => {
       name: '',
     },
     onSubmit: async (values: IUserInfo) => {
-      await updateUserInfo({ values, userId });
+        await updateUserInfo({ values, userId });
     },
   });
 

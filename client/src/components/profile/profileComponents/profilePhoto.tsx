@@ -1,7 +1,7 @@
 import { FormikProps } from 'formik';
 import React, { useState } from 'react';
 import { IUserInfo } from '../../../interfaces';
-import { profileIconsList } from '../../profileIconsList';
+import { profileIconsList } from '../profileIconsList';
 
 const ProfilePhoto: React.FC<{ formik: FormikProps<IUserInfo> }> = ({
   formik,
@@ -31,8 +31,7 @@ const ProfilePhoto: React.FC<{ formik: FormikProps<IUserInfo> }> = ({
       ></img>
 
       <button
-        onClick={(event) => {
-          event.preventDefault();
+        onClick={() => {
           handleChangeProfilePhoto();
         }}
         className="button"

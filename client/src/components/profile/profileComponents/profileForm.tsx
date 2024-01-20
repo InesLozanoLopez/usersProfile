@@ -4,6 +4,7 @@ import { FormikProps } from 'formik';
 import AddHouseConfirmationMessage from './addHouseConfirmationMessage';
 import DeleteHouseConfirmationMessage from './deleteHouseConfirmationMessage';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const ProfileForm: React.FC<{ formik: FormikProps<IUserInfo> }> = ({
   formik,
@@ -21,9 +22,13 @@ const ProfileForm: React.FC<{ formik: FormikProps<IUserInfo> }> = ({
   };
 
   const handleAddHouse = async () => {
-    await formik.submitForm();
-    navigate('/house-profile');
-  };
+    try {
+      await formik.submitForm();
+      navigate('/house-profile');
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <form onSubmit={formik.handleSubmit}>

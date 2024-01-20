@@ -22,6 +22,6 @@
     },
     "include": [
         "src"
-, "src/components/profileIconsList.tsx"    ],
+, "src/components/profile/profileIconsList.tsx"    ],
     "exclude": ["node_modules"]
   }

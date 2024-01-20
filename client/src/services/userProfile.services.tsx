@@ -35,7 +35,7 @@ export const updateUserInfo = async ({
         ...authHeader(),
       },
     });
-
+    toast.success('User updated');
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

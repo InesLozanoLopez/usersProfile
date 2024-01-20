@@ -18,6 +18,7 @@ export const registerUser = async ({
       password,
       confirmPassword,
     });
+    toast.success('Registration successful! Welcome!')
     return response;
   } catch (error) {
     if (axios.isAxiosError(error)) {

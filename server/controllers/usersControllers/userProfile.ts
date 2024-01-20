@@ -26,27 +26,34 @@ export const editProfile = async (req: Request, res: Response) => {
       email,
       name,
     } = req.body.values as IeditProfileRequest;
+
     const userId = req.body.userId;
-    const userInstance = await UsersProfile.findOne({
+    const userInstancebyId = await UsersProfile.findOne({
       where: { usersRegistration_id: userId },
     });
+    const userInstancebyEmail = await UsersRegistration.findOne({
+      where: {email: email}
+    })
 
-    if (!userInstance) {
+    if (!userInstancebyId) {
       return res.status(404).send({ message: 'User profile not found' });
     }
+    if(userInstancebyEmail && userInstancebyEmail.dataValues.email !== userInstancebyId.dataValues.email) {
+      return res.status(404).send({ message: 'That email is already regitrer with other profile'});
+    }
 
-    userInstance.set({
+    userInstancebyId.set({
       photo: photo,
       house: house,
       admin: admin,
       email: email,
       name: name,
     });
-    await userInstance.save();
+    await userInstancebyId.save();
 
     const userRegistration = await UsersRegistration.findOne({
-      where: { id: userId },
-    });
+      where: {id : userId}
+    })
     if (userRegistration) {
       userRegistration.set({
         email: email,
