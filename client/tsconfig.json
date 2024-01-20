@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-      "target": "es2016",
+      "target": "es5",
       "lib": [
         "dom",
         "dom.iterable",
@@ -22,6 +22,5 @@
     },
     "include": [
         "src"
-, "src/components/profile/profileIconsList.tsx"    ],
-    "exclude": ["node_modules"]
+      ],
   }

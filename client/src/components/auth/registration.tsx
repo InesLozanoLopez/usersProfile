@@ -57,6 +57,7 @@ const Registration: React.FC = () => {
           className="formInput"
           value={formik.values.name}
           onChange={formik.handleChange}
+          autoComplete="user-name"
         />
         <input
           type="text"
@@ -66,6 +67,7 @@ const Registration: React.FC = () => {
           className="formInput"
           value={formik.values.email}
           onChange={formik.handleChange}
+          autoComplete="user-email"
         />
         <input
           type="password"
@@ -75,6 +77,7 @@ const Registration: React.FC = () => {
           className="formInput"
           value={formik.values.password}
           onChange={formik.handleChange}
+          autoComplete="user-password"
         />
         <input
           type="password"
@@ -84,6 +87,7 @@ const Registration: React.FC = () => {
           className="formInput"
           value={formik.values.confirmPassword}
           onChange={formik.handleChange}
+          autoComplete="user-password"
         />
 
         <div className="submit">

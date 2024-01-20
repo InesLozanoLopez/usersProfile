@@ -68,6 +68,7 @@ const Login: React.FC = () => {
             className="formInput"
             value={formik.values.email}
             onChange={formik.handleChange}
+            autoComplete="user-email"
           />
           <input
             type="password"
@@ -77,6 +78,7 @@ const Login: React.FC = () => {
             className="formInput"
             value={formik.values.password}
             onChange={formik.handleChange}
+            autoComplete="current-password"
           />
           <div className="submitButton">
             <button type="submit" aria-label="submit" className="button">
