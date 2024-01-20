@@ -25,8 +25,8 @@ const ProfilePhoto: React.FC<{ formik: FormikProps<IUserInfo> }> = ({
     <>
       <img
         src={`/iconsProfile/${formik.values.photo}.png`}
-        alt="Photo perfil"
-        aria-label="Perfil photo"
+        alt="Profile"
+        aria-label="Profile"
         className="profilePhoto"
       ></img>
 
@@ -48,7 +48,7 @@ const ProfilePhoto: React.FC<{ formik: FormikProps<IUserInfo> }> = ({
               <img
                 key={index}
                 src={`/iconsProfile/${fileName}.png`}
-                alt="Photo perfil"
+                alt="Profile"
                 className="profilePhoto"
                 aria-label="Alternative profile photos"
                 onClick={() => handleSelectProfilePhoto(fileName)}

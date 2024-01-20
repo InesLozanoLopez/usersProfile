@@ -7,7 +7,6 @@ import ProfileForm from './profileComponents/profileForm';
 import { updateUserInfo } from '../../services/userProfile.services';
 import { useFormik } from 'formik';
 import { IUserInfo } from '../../interfaces';
-import { toast } from 'react-toastify';
 
 const Profile: React.FC = () => {
   const location = useLocation();
@@ -45,6 +44,7 @@ const Profile: React.FC = () => {
       }
     };
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

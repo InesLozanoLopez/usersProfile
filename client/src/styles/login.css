@@ -15,14 +15,14 @@
 
 #formContainer .submitButton{
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     padding-right: 5%;
     padding-top: 0;
     padding-top: 2vw;
 }
 #registration {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     padding-right: 10vw;
 }
 

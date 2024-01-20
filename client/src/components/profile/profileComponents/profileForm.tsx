@@ -4,7 +4,6 @@ import { FormikProps } from 'formik';
 import AddHouseConfirmationMessage from './addHouseConfirmationMessage';
 import DeleteHouseConfirmationMessage from './deleteHouseConfirmationMessage';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 const ProfileForm: React.FC<{ formik: FormikProps<IUserInfo> }> = ({
   formik,
